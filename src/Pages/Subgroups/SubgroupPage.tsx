@@ -5,18 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { goLoading } from '../../Routes/coordinator';
 import { Subgroup } from '../../types/type';
 import { useForm } from '../../hooks/useForm';
-import { Box, 
-    IconButton, 
-    Table, 
-    TableBody, 
-    TableCell, 
-    TableContainer, 
-    TableHead,
-    TableRow,
-    Paper, 
-    TextField
-} from '@mui/material'
-import { KeyboardArrowDown, KeyboardArrowUp} from '@mui/icons-material'
+import { ContainerSearchSubgroup, Main, SearchSubgroup, TableWrapper, Table, TableRow, TableBody, TableHead, TableCellCod, TableCellDescription, TableCellFixedExpense, TableCellProfitPorcentage } from './styleSubgroup';
+
 
 
 const createData = (
@@ -69,18 +59,15 @@ const createData = (
 
 const Row = (props: { row: ReturnType<typeof createData> }) => {
     const { row } = props;
-    const [open, setOpen] = React.useState(false);
 
     return (
-        <React.Fragment>
-            <TableRow sx={{ '& > *': { borderBottom: 'unset' } }}>
-                <TableCell align="right">{row.codSubgroup}</TableCell>
-                <TableCell component="th" scope="row">{row.nameSubgroup}</TableCell>
-                <TableCell align="right">{row.fixedUnitExpense}</TableCell>
-                <TableCell align="right">{row.plucro}</TableCell>
-            </TableRow>
-            
-        </React.Fragment>
+
+        <TableRow>
+            <TableCellCod>{row.codSubgroup}</TableCellCod>
+            <TableCellDescription>{row.nameSubgroup}</TableCellDescription>
+            <TableCellFixedExpense>{row.fixedUnitExpense}</TableCellFixedExpense>
+            <TableCellProfitPorcentage>{row.plucro}</TableCellProfitPorcentage>
+        </TableRow>
     );
 }
 
@@ -189,23 +176,24 @@ export const SubgroupsPage: React.FC = () => {
     }
 
     return (
-        <Box>
-            <TextField
-                component={Paper}
-                placeholder='Buscar'
-                id='search'
-                name='search'
-                onChange={(event: ChangeEvent<HTMLInputElement>) => {onChange(event); filterListSubgroups(event)}}
-                value={form.search}
-            />
-            <TableContainer component={Paper}>
-                <Table aria-label="collapsible table">
+        <Main>
+            <ContainerSearchSubgroup>
+                <SearchSubgroup 
+                    placeholder='Buscar'
+                    id='search'
+                    name='search'
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => {onChange(event); filterListSubgroups(event)}}
+                    value={form.search}
+                />
+            </ContainerSearchSubgroup>
+            <TableWrapper>
+                <Table>
                     <TableHead>
                         <TableRow>
-                            <TableCell align="left">Código</TableCell>
-                            <TableCell align="left">Descrição</TableCell>
-                            <TableCell align="right">Despesa Fixa (R$)</TableCell>
-                            <TableCell align="right">Lucro (%)</TableCell>
+                            <TableCellCod>Código</TableCellCod>
+                            <TableCellDescription>Descrição</TableCellDescription>
+                            <TableCellFixedExpense>Despesa Fixa (R$)</TableCellFixedExpense>
+                            <TableCellProfitPorcentage>Lucro (%)</TableCellProfitPorcentage>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -214,8 +202,8 @@ export const SubgroupsPage: React.FC = () => {
                         ))}
                     </TableBody>
                 </Table>
-            </TableContainer>
-        </Box>
+            </TableWrapper>
+        </Main>
 
     )
 }
