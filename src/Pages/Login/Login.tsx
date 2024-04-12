@@ -15,6 +15,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios, { AxiosError } from 'axios';
 import { BASE_URL_LOCAL } from '../../constants/BASE_URL';
 import { Alert } from '@mui/material';
+import { goSubgroups } from '../../Routes/coordinator';
+import { useNavigate } from 'react-router-dom';
 
 type severity = "success" | "info" | "warning" | "error"
 
@@ -92,6 +94,14 @@ export const SignInSide = () => {
         }
 
     };
+    
+    const navigate = useNavigate()
+
+    React.useEffect(() => {
+        if(localStorage.getItem('token')){
+            goSubgroups(navigate)
+        }
+    }, [])
 
     return (
         <ThemeProvider theme={defaultTheme}>

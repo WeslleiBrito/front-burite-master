@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { goLoading } from '../../Routes/coordinator';
 import { Subgroup } from '../../types/type';
 import { useForm } from '../../hooks/useForm';
-import { ContainerSearchSubgroup, Main, SearchSubgroup, TableWrapper, Table, TableRow, TableBody, TableHead, TableCellCod, TableCellDescription, TableCellFixedExpense, TableCellProfitPorcentage } from './styleSubgroup';
+import { ContainerSearch, Main, Search, TableWrapper, Table, TableRow, TableBody, TableHead, TableCellCod, TableCellDescription, TableCellFixedExpense, TableCellProfitPorcentage } from './styleSubgroup';
 
 
 
@@ -177,22 +177,22 @@ export const SubgroupsPage: React.FC = () => {
 
     return (
         <Main>
-            <ContainerSearchSubgroup>
-                <SearchSubgroup 
+            <ContainerSearch>
+                <Search 
                     placeholder='Buscar'
                     id='search'
                     name='search'
                     onChange={(event: ChangeEvent<HTMLInputElement>) => {onChange(event); filterListSubgroups(event)}}
                     value={form.search}
                 />
-            </ContainerSearchSubgroup>
+            </ContainerSearch>
             <TableWrapper>
                 <Table>
                     <TableHead>
                         <TableRow>
                             <TableCellCod>Código</TableCellCod>
                             <TableCellDescription>Descrição</TableCellDescription>
-                            <TableCellFixedExpense>Despesa Fixa (R$)</TableCellFixedExpense>
+                            <TableCellFixedExpense>Des. Fixa (R$)</TableCellFixedExpense>
                             <TableCellProfitPorcentage>Lucro (%)</TableCellProfitPorcentage>
                         </TableRow>
                     </TableHead>

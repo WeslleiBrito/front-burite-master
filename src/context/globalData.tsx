@@ -1,5 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react'
-import { ContextInterface, Subgroup } from '../types/type'
+import { ContextInterface, ListShopping, Subgroup } from '../types/type'
 import { DataContext } from './dataContext'
 import { useFachtData } from '../hooks/useFetchDataHook'
 import axios, { AxiosError }  from 'axios';
@@ -15,7 +15,8 @@ export const GlobalDataProvider: React.FC<DataContextProps> = (props) => {
     const {error, loading, usersNameAPI, setLoading, setError} = useFachtData()
     const [usersName, setUsersName] = useState<string[]>([])
     const [subgroups, setSubgroups] = useState<Subgroup[]>([])
-
+    const [shoppingList, setShoppingList] = useState<ListShopping[]>([])
+    
     useEffect(() => setUsersName([...usersNameAPI]), [usersNameAPI])
 
     const updateSubgroup = async () => {
@@ -35,6 +36,30 @@ export const GlobalDataProvider: React.FC<DataContextProps> = (props) => {
            setLoading(false)
 
             if(error instanceof AxiosError){
+                console.log("Erro do axios", error);
+                
+                if(error.response?.status === 401){
+                    localStorage.removeItem('token')
+                }
+            }else{
+                console.log(error)
+            }
+        }
+    }
+
+    const updatedShoppingList = async () => {
+
+        try {
+            setLoading(true)
+            const result = await axios.get(BASE_URL_LOCAL + '/price-formation')
+
+            setShoppingList([...result.data])
+            setLoading(false)
+        } catch (error) {     
+           setError(true)
+           setLoading(false)
+
+            if(error instanceof AxiosError){
                 console.log("Erro do axios");
             }else{
                 console.log(error)
@@ -47,7 +72,9 @@ export const GlobalDataProvider: React.FC<DataContextProps> = (props) => {
         error,
         loading,
         updateSubgroup,
-        subgroups
+        subgroups,
+        updatedShoppingList,
+        shoppingList
     }
 
     return <DataContext.Provider value={context}>{props.children}</DataContext.Provider>

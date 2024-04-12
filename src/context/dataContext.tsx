@@ -6,7 +6,9 @@ const defaultContextValue: ContextInterface = {
     loading: true,
     error: false,
     updateSubgroup: async () => {},
-    subgroups: []
+    subgroups: [],
+    updatedShoppingList: async () => {},
+    shoppingList: []
 }
 
 export const DataContext = createContext<ContextInterface>(defaultContextValue)
