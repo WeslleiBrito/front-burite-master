@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { DataContext } from '../../context/dataContext'
 import { useNavigate } from "react-router-dom";
-import { goLoading } from "../../Routes/coordinator";
+import { goCreatePrice, goLoading } from "../../Routes/coordinator";
 import { ContainerSearch, Main, Search, Table, TableBody, TableHead, TableWrapper,  TableRow} from "../Subgroups/styleSubgroup";
 import { ListShopping } from "../../types/type";
 import { CodNF, Provider, PurchaseDate, PurchaseValue, TableRowHeader } from "./styleShoopingListPage";
@@ -45,7 +45,7 @@ export const ShoopingListPage: React.FC = () => {
         const dateFormated = `${day}/${month}/${year}`
 
         return (
-            <TableRow>
+            <TableRow onClick={() => {goCreatePrice(navigate, row.nf)}}>
                 <CodNF>{row.nf}</CodNF>
                 <Provider>{row.provider}</Provider>
                 <PurchaseDate>{dateFormated}</PurchaseDate>

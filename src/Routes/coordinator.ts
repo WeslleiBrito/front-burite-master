@@ -7,3 +7,7 @@ export const goSubgroups = (navigate: NavigateFunction): void => {
 export const goLoading = (navigate: NavigateFunction): void => {
     navigate('/')
 }
+
+export const goCreatePrice = (navigate: NavigateFunction, nf: string): void => {
+    navigate(`/create-price/${nf}`)
+}
