@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { NfPurchase, ProductsNf } from "../../types/type";
+import React, { ChangeEvent, useEffect, useState } from "react";
+import { InputProductSalePrice, InputValuesCreatePrice, NfPurchase, ProductsNf } from "../../types/type";
 import axios, {AxiosError} from "axios";
 import { BASE_URL_LOCAL } from "../../constants/BASE_URL";
 import { useParams } from "react-router-dom";
-import { CodeProduct, Commission, Cost, Description, ExpenseFixed, ExpenseVariable, InputCommissionPorcentage, InputCommissionValue, InputProfitPorcentage, InputProfitValue, Main, Profit, Quantity, Table, TableHead, TableRow, TableWrapper, InputPrice, Discount, InputDiscountValue, InputDiscountPorcentage, SalePrice, TableBody } from "./styleCreatePrice";
+import { CodeProduct, Commission, Cost, Description, ExpenseFixed, ExpenseVariable, InputCommissionPorcentage, InputCommissionValue, InputProfitPorcentage, InputProfitValue, Main, Profit, Quantity, Table, TableHead, TableRow, TableWrapper, InputPrice, Discount, InputDiscountValue, InputDiscountPorcentage, SalePrice, TableBody, RowHead } from "./styleCreatePrice";
 
+type keyObjectValues = "inputFraction" | "inputCommissionPorcentage" | "inputCommissionValue" | "inputDiscountPorcentage" | "inputDiscountValue" | "inputPrice" | "inputProfitPorcentage" | "inputProfitValue"
 
 export const CreatePrice: React.FC = () => {
 
@@ -39,6 +40,40 @@ export const CreatePrice: React.FC = () => {
         
             const { product } = props
 
+            const [ objectValues, setObjectValues] = useState<InputValuesCreatePrice>({
+                expenseVariable: product.expenseVariableUnit,
+                inputCommissionPorcentage: product.commission,
+                inputCommissionValue: product.commission * product.newSalePrice,
+                inputDiscountPorcentage: product.discountPercentageMax,
+                inputDiscountValue: product.discountValueMax,
+                inputPrice: product.newSalePrice,
+                inputProfitPorcentage: product.profitPercentage,
+                inputProfitValue: product.profitUnit 
+            })
+
+            const onChange = async (event: ChangeEvent<HTMLInputElement>) => {
+                const { name, value } = event.target;
+                const valueNumber = Number(value.replace(',', '.'))
+
+                const products: InputProductSalePrice[] = [
+                    {
+                        codeProduct: product.code,
+                        cost: product.costValue,
+                        commission: name === "inputCommissionPorcentage" ? valueNumber : undefined,
+                        discount: name === 'inputDiscountPorcentage' ? valueNumber : undefined,
+                        fraction: name === 'inputFraction' ? valueNumber : undefined,
+                        profitPercentage: name === 'inputProfitPorcentage' ? valueNumber : undefined,
+                        profitValue: name === 'inputProfitValue' ? valueNumber : undefined
+                    }
+                ]
+                try {
+                    
+                } catch (error) {
+                    
+                }
+                setObjectValues({...objectValues, [name]: value})
+
+            }
             return(
                     <TableRow>
                         <CodeProduct>{product.code}</CodeProduct>
@@ -46,21 +81,23 @@ export const CreatePrice: React.FC = () => {
                         <Quantity>{product.inputQuantity}</Quantity>
                         <Cost>{product.costValue}</Cost>
                         <ExpenseFixed>{product.expenseFixedUnit}</ExpenseFixed>
-                        <ExpenseVariable>{product.expenseVariableUnit}</ExpenseVariable>
+                        <ExpenseVariable>
+                            {product.expenseVariableUnit}
+                        </ExpenseVariable>
                         <Commission>
-                            <InputCommissionValue value={product.commission}/>
-                            <InputCommissionPorcentage value={(product.commission / product.newSalePrice).toFixed(2)}/>
+                            <InputCommissionValue value={objectValues.inputCommissionValue} name="inputCommissionValue" onChange={(event: ChangeEvent<HTMLInputElement>) => {onChange(event)}}/>
+                            <InputCommissionPorcentage value={objectValues.inputCommissionPorcentage} name="inputCommissionPorcentage"/>
                         </Commission>
                         <Discount>
-                            <InputDiscountValue value={product.discountValueMax}/>
-                            <InputDiscountPorcentage value={product.discountPercentageMax}/>
+                            <InputDiscountValue value={objectValues.inputDiscountValue}/>
+                            <InputDiscountPorcentage value={objectValues.inputDiscountPorcentage}/>
                         </Discount>
                         <Profit>
-                            <InputProfitValue value={product.profitUnit}/>
-                            <InputProfitPorcentage value={product.profitPercentage}/>
+                            <InputProfitValue value={objectValues.inputProfitValue}/>
+                            <InputProfitPorcentage value={objectValues.inputProfitPorcentage}/>
                         </Profit>
                         <SalePrice>
-                            <InputPrice value={product.newSalePrice}/>
+                            <InputPrice value={objectValues.inputPrice}/>
                         </SalePrice>
                     </TableRow>
                 )
@@ -72,7 +109,7 @@ export const CreatePrice: React.FC = () => {
             <TableWrapper>
                 <Table>
                     <TableHead>
-                        <TableRow>
+                        <RowHead>
                             <CodeProduct>Código</CodeProduct>
                             <Description>Descrição</Description>
                             <Quantity>Quant.</Quantity>
@@ -83,7 +120,7 @@ export const CreatePrice: React.FC = () => {
                             <Discount>Desconto</Discount>
                             <Profit>Lucro</Profit>
                             <SalePrice>Venda</SalePrice>
-                        </TableRow>
+                        </RowHead>
                     </TableHead>
                     <TableBody>
                         {

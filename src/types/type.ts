@@ -81,3 +81,26 @@ export interface NfPurchase {
     provider: string
     products: ProductsNf[]
 }
+
+export interface InputValuesCreatePrice {
+    expenseVariable: number,
+    inputCommissionValue: number,
+    inputCommissionPorcentage: number,
+    inputDiscountValue: number,
+    inputDiscountPorcentage: number,
+    inputProfitValue: number,
+    inputProfitPorcentage: number,
+    inputPrice: number
+}
+
+export interface InputProductSalePrice {
+    codeProduct: number,
+    cost: number,
+    unit?: string,
+    quantity?: number,
+    fraction?: number,
+    profitPercentage?: number,
+    profitValue?: number,
+    commission?: number,
+    discount?: number
+}

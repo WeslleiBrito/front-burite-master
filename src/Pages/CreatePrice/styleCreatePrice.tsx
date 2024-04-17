@@ -32,6 +32,12 @@ export const Table = styled.table`
 
 export const TableHead = styled.thead``
 
+export const RowHead = styled.tr`
+    display: flex;
+    width: 100%;
+    font-weight: 700;
+    text-align: center;
+`
 export const TableBody = styled.tbody`
     display: flex;
     flex-direction: column;
@@ -56,6 +62,8 @@ export const TableBody = styled.tbody`
 export const TableRow = styled.tr`
     display: flex;
     width: 100%;
+    font-weight: 500;
+    text-align: center;
 `
 
 export const CodeProduct = styled.td`
@@ -81,7 +89,7 @@ export const Cost = styled.td`
 `
 
 export const ExpenseFixed = styled.td`
-    width: 7vw;
+    width: 6vw;
     background-color: #FF8C00;
 `
 
@@ -94,7 +102,7 @@ export const Commission = styled.td`
     display: flex;
     width: 8vw;
     justify-content: center;
-    background-color: #EEE8AA;
+    background-color: #CD5C5C;
 `
 
 export const Profit = styled.td`
@@ -113,33 +121,71 @@ export const Discount = styled.td`
 
 export const SalePrice = styled.td`
     display: flex;
-    width: 6vw;
+    justify-content: center;
+    width: 5vw;
+    background-color: #7B68EE;
 `
 
-export const InputCommissionPorcentage = styled.input.attrs({type: "number"})`
+export const InputCommissionPorcentage = styled.input.attrs({ type: "number" })`
     width: 45%;
+    input[type="number"]&::-webkit-inner-spin-button,
+    input[type="number"]&::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+  
 `
 
-export const InputCommissionValue = styled.input.attrs({type: "number"})`
+export const InputCommissionValue = styled.input.attrs({ type: "number" })`
     width: 45%;
+    input[type="number"]&::-webkit-inner-spin-button,
+    input[type="number"]&::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 `
 
-export const InputDiscountValue = styled.input.attrs({type: "number"})`
+export const InputDiscountValue = styled.input.attrs({ type: "number" })`
     width: 45%;
+    input[type="number"]&::-webkit-inner-spin-button,
+    input[type="number"]&::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 `
 
-export const InputDiscountPorcentage = styled.input.attrs({type: "number"})`
-     width: 45%;
+export const InputDiscountPorcentage = styled.input.attrs({ type: "number" })`
+    width: 45%;
+    input[type="number"]&::-webkit-inner-spin-button,
+    input[type="number"]&::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 `
 
-export const InputProfitPorcentage = styled.input.attrs({type: "number"})`
-     width: 45%;
+export const InputProfitPorcentage = styled.input.attrs({ type: "number" })`
+    width: 45%;
+    input[type="number"]&::-webkit-inner-spin-button,
+    input[type="number"]&::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 `
 
-export const InputProfitValue = styled.input.attrs({type: "number"})`
-     width: 45%;
+export const InputProfitValue = styled.input.attrs({ type: "number" })`
+    width: 45%;
+    input[type="number"]&::-webkit-inner-spin-button,
+    input[type="number"]&::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 `
 
-export const InputPrice = styled.input.attrs({type: "number"})`
-     width: 90%;
+export const InputPrice = styled.input.attrs({ type: "number" })`
+    width: 80%;
+    input[type="number"]&::-webkit-inner-spin-button,
+    input[type="number"]&::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 `
