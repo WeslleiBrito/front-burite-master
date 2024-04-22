@@ -74,6 +74,7 @@ export const CodeProduct = styled.td`
 
 export const Description = styled.td`
     width: 35vw;
+    height: 4vh;
     text-align: start;
     background-color: cyan;
 `

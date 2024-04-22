@@ -66,6 +66,7 @@ export interface ProductsNf extends ProductsPrice {
     profitUnit: number,
     profitPercentage: number,
     commission: number,
+    commissionPorcentage: number,
     amountCost: number,
     amountInvoicing: number,
     limitedProfitPorcentage: {
@@ -83,14 +84,12 @@ export interface NfPurchase {
 }
 
 export interface InputValuesCreatePrice {
-    expenseVariable: number,
-    inputCommissionValue: number,
-    inputCommissionPorcentage: number,
-    inputDiscountValue: number,
-    inputDiscountPorcentage: number,
-    inputProfitValue: number,
-    inputProfitPorcentage: number,
-    inputPrice: number
+    inputCommission: string,
+    inputDiscountPorcentage: string,
+    inputProfitValue: string,
+    inputProfitPorcentage: string,
+    inputPrice: string,
+    inputFraction: string
 }
 
 export interface InputProductSalePrice {
@@ -102,5 +101,6 @@ export interface InputProductSalePrice {
     profitPercentage?: number,
     profitValue?: number,
     commission?: number,
-    discount?: number
+    discount?: number,
+    price?: number,
 }
