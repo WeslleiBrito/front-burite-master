@@ -84,6 +84,7 @@ export interface NfPurchase {
 }
 
 export interface InputValuesCreatePrice {
+    codeProduct: number,
     inputCommission: string,
     inputDiscountPorcentage: string,
     inputProfitValue: string,
