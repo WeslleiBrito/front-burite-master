@@ -1,5 +1,9 @@
 import styled from "styled-components";
 
+type ConfigStyle = {
+    styleItem?: boolean
+}
+
 export const Header = styled.header``
 
 export const LableCodeNf = styled.label``
@@ -34,7 +38,7 @@ export const TableHead = styled.thead``
 
 export const RowHead = styled.tr`
     display: flex;
-    width: 100%;
+    width: 87vw;
     font-weight: 700;
     text-align: center;
 `
@@ -61,132 +65,148 @@ export const TableBody = styled.tbody`
 
 export const TableRow = styled.tr`
     display: flex;
-    width: 100%;
+    width: 87vw;
     font-weight: 500;
     text-align: center;
+    border: 1px solid #f1f1f1;
+    height: 6.5vh;
+    align-items: center;
+    margin-bottom: 0.3vh;
+    justify-content: space-around;
 `
 
 export const CodeProduct = styled.td`
-    width: 4vw;
+    width: 4.5vw;
     text-align: center;
-    background-color: orange;
+    height: 4vh;
+    margin-right: 1vw;
 `
 
 export const Description = styled.td`
     width: 35vw;
     height: 4vh;
     text-align: start;
-    background-color: cyan;
 `
 
 export const Quantity = styled.td`
-    width: 5.5vw;
-    background-color: #4682B4;
+    width: 6vw;
 `
 
 export const Cost = styled.td`
     width: 5vw;
-    background-color: #00FF7F;
 `
 
 export const ExpenseFixed = styled.td`
     width: 6vw;
-    background-color: #FF8C00;
 `
 
 export const ExpenseVariable = styled.td`
     width: 5vw;
-    background-color: #D8BFD8;
 `
 
-export const Commission = styled.td`
+export const Commission = styled.td<ConfigStyle>`
     display: flex;
     width: 8vw;
-    justify-content: center;
-    background-color: #CD5C5C;
+    justify-content: space-around;
+    padding: 0.5vh;
+    background-color: ${props => props.styleItem ? 'whitesmoke' : "none"};
+    border-radius: 0.2vw;
+    margin-right: 1vw;
 `
 
-export const Profit = styled.td`
+export const Profit = styled.td<ConfigStyle>`
     display: flex;
-    width: 8vw;
-    justify-content: center;
-    background-color: #0000CD;
+    width: 9vw;
+    justify-content: space-around;
+    padding: 0.5vh;
+    background-color: ${props => props.styleItem ? 'whitesmoke' : "none"};
+    border-radius: 0.2vw;
+    margin-right: 1vw;
 `
 
-export const Discount = styled.td`
+export const Discount = styled.td<ConfigStyle>`
     display: flex;
-    width: 8vw;
-    justify-content: center;
-    background-color: #F08080;
+    width: 9vw;
+    justify-content: space-around;
+    padding: 0.5vh;
+    background-color: ${props => props.styleItem ? 'whitesmoke' : "none"};
+    border-radius: 0.2vw;
+    margin-right: 1vw;
 `
 
 export const SalePrice = styled.td`
     display: flex;
     justify-content: center;
     width: 5vw;
-    background-color: #7B68EE;
+    align-items: center;
 `
-
+export const DiscountValue = styled.p`
+    width: 3.5vw;
+    color: coral;
+`
+export const CommissionValue = styled.p`
+    width: 3.5vw;
+    color: coral;
+`
 export const InputCommissionPorcentage = styled.input.attrs({ type: "number" })`
-    width: 45%;
+    width: 3.5vw;
+    &:focus {
+        outline: none;
+    };
     input[type="number"]&::-webkit-inner-spin-button,
     input[type="number"]&::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
-    }
+    };
+    height: 4vh;
   
 `
 
-export const InputCommissionValue = styled.input.attrs({ type: "number" })`
-    width: 45%;
-    input[type="number"]&::-webkit-inner-spin-button,
-    input[type="number"]&::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-`
-
-export const InputDiscountValue = styled.input.attrs({ type: "number" })`
-    width: 45%;
-    input[type="number"]&::-webkit-inner-spin-button,
-    input[type="number"]&::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-`
-
 export const InputDiscountPorcentage = styled.input.attrs({ type: "number" })`
-    width: 45%;
+    width: 4vw;
+    &:focus {
+        outline: none;
+    };
     input[type="number"]&::-webkit-inner-spin-button,
     input[type="number"]&::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
-    }
+    };
+    height: 4vh;
 `
 
 export const InputProfitPorcentage = styled.input.attrs({ type: "number" })`
-    width: 45%;
+    width: 3.5vw;
     input[type="number"]&::-webkit-inner-spin-button,
     input[type="number"]&::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
-    }
+    };
+    height: 4vh;
 `
 
 export const InputProfitValue = styled.input.attrs({ type: "number" })`
-    width: 45%;
+    width: 3.5vw;
+    &:focus {
+        outline: none;
+    };
     input[type="number"]&::-webkit-inner-spin-button,
     input[type="number"]&::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
-    }
+    };
+    height: 4vh;
 `
 
 export const InputPrice = styled.input.attrs({ type: "number" })`
-    width: 80%;
+    width: 4vw;
+    &:focus {
+        outline: none;
+    };
     input[type="number"]&::-webkit-inner-spin-button,
     input[type="number"]&::-webkit-outer-spin-button {
         -webkit-appearance: none;
         margin: 0;
-    }
+    };
+    height: 3.5vh;
 `

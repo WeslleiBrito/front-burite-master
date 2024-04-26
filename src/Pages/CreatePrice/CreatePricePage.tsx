@@ -5,7 +5,7 @@ import { BASE_URL_LOCAL } from "../../constants/BASE_URL";
 import { useParams } from "react-router-dom";
 import UpdateIcon from '@mui/icons-material/Update';
 import { Button } from "@mui/material";
-import { CodeProduct, Commission, Cost, Description, ExpenseFixed, ExpenseVariable, InputCommissionPorcentage, InputProfitPorcentage, InputProfitValue, Main, Profit, Quantity, Table, TableHead, TableRow, TableWrapper, InputPrice, Discount, InputDiscountPorcentage, SalePrice, TableBody, RowHead } from "./styleCreatePrice";
+import { CodeProduct, Commission, Cost, Description, ExpenseFixed, ExpenseVariable, InputCommissionPorcentage, InputProfitPorcentage, InputProfitValue, Main, Profit, Quantity, Table, TableHead, TableRow, TableWrapper, InputPrice, Discount, InputDiscountPorcentage, SalePrice, TableBody, RowHead, DiscountValue, CommissionValue } from "./styleCreatePrice";
 
 type keyObjectValues = "inputCommission" | "inputDiscountPorcentage" | "inputPrice" | "inputProfitPorcentage" | "inputProfitValue" | "inputFraction" | ""
 
@@ -23,28 +23,42 @@ const RowProducts = (props: { product: ProductsNf, handleModifiedProducts: Funct
         inputFraction: product.fraction.toFixed(2)
     })
 
-
+    useEffect(() => {
+        setObjectValues({
+            codeProduct: product.code,
+            inputCommission: product.commissionPorcentage.toFixed(2),
+            inputDiscountPorcentage: product.discountPercentageMax.toFixed(2),
+            inputPrice: product.newSalePrice.toFixed(2),
+            inputProfitPorcentage: product.profitPercentage.toFixed(2),
+            inputProfitValue: product.profitUnit.toFixed(2),
+            inputFraction: product.fraction.toFixed(2)
+        })
+    }, [product])
     const [modify, setModify] = useState<keyObjectValues>("")
 
     const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target
         setObjectValues((prevForm) => ({ ...prevForm, [name]: value }))
-        const newValues: InputProductSalePrice =  {
-            codeProduct: product.code,
-            cost: product.costValue,
-            commission: Number(objectValues.inputCommission),
-            discount: Number(objectValues.inputDiscountPorcentage),
-            fraction: Number(objectValues.inputFraction),
-            profitPercentage: modify === 'inputProfitPorcentage' ? Number(objectValues.inputProfitPorcentage) : undefined,
-            profitValue: modify === 'inputProfitValue' ? Number(objectValues.inputProfitValue) : undefined,
-            price: modify === 'inputPrice' ? Number(objectValues.inputPrice) : undefined,
-            quantity: product.inputQuantity / product.fraction
-        }
-
-        handleModifiedProducts(newValues)
+        
     }
 
-  
+    useEffect(() => {
+        if(modify.length > 0){
+            const newValues: InputProductSalePrice =  {
+                codeProduct: product.code,
+                cost: product.costValue,
+                commission: Number(objectValues.inputCommission),
+                discount: Number(objectValues.inputDiscountPorcentage),
+                fraction: Number(objectValues.inputFraction),
+                profitPercentage: modify === 'inputProfitPorcentage' ? Number(objectValues.inputProfitPorcentage) : undefined,
+                profitValue: modify === 'inputProfitValue' ? Number(objectValues.inputProfitValue) : undefined,
+                price: modify === 'inputPrice' ? Number(objectValues.inputPrice) : undefined,
+                quantity: product.inputQuantity / product.fraction
+            }
+    
+            handleModifiedProducts(newValues)
+        }
+    }, [objectValues])
 
     const formatNumber = (event: FocusEvent<HTMLInputElement>) => {
 
@@ -63,7 +77,7 @@ const RowProducts = (props: { product: ProductsNf, handleModifiedProducts: Funct
             <ExpenseVariable>
                 {product.expenseVariableUnit.toFixed(2).replace('.', ',')}
             </ExpenseVariable>
-            <Commission>
+            <Commission styleItem={true}>
                 <InputCommissionPorcentage
                     value={objectValues.inputCommission}
                     name="inputCommission"
@@ -71,8 +85,9 @@ const RowProducts = (props: { product: ProductsNf, handleModifiedProducts: Funct
                     onBlur={(event: FocusEvent<HTMLInputElement>) => { formatNumber(event) }}
                     min={0}
                 />
+                <CommissionValue>{product.commission.toFixed(2).replace('.', ',')}</CommissionValue>
             </Commission>
-            <Discount>
+            <Discount styleItem={true}>
                 <InputDiscountPorcentage
                     value={objectValues.inputDiscountPorcentage}
                     name="inputDiscountPorcentage"
@@ -80,19 +95,21 @@ const RowProducts = (props: { product: ProductsNf, handleModifiedProducts: Funct
                     onBlur={(event: FocusEvent<HTMLInputElement>) => { formatNumber(event) }}
                     min={0}
                 />
+                <DiscountValue>{product.discountValueMax.toFixed(2).replace('.', ',')}</DiscountValue>
             </Discount>
-            <Profit>
-                <InputProfitValue
-                    value={objectValues.inputProfitValue}
-                    name="inputProfitValue"
-                    onChange={(event: ChangeEvent<HTMLInputElement>) => { handleInput(event); setModify('inputProfitValue') }}
-                    onBlur={(event: FocusEvent<HTMLInputElement>) => { formatNumber(event) }}
-                    min={0}
-                />
+            <Profit styleItem={true}>
                 <InputProfitPorcentage
                     value={objectValues.inputProfitPorcentage}
                     name="inputProfitPorcentage"
                     onChange={(event: ChangeEvent<HTMLInputElement>) => { handleInput(event); setModify('inputProfitPorcentage') }}
+                    onBlur={(event: FocusEvent<HTMLInputElement>) => { formatNumber(event) }}
+                    min={0}
+                />
+
+                <InputProfitValue
+                    value={objectValues.inputProfitValue}
+                    name="inputProfitValue"
+                    onChange={(event: ChangeEvent<HTMLInputElement>) => { handleInput(event); setModify('inputProfitValue') }}
                     onBlur={(event: FocusEvent<HTMLInputElement>) => { formatNumber(event) }}
                     min={0}
                 />
@@ -138,7 +155,6 @@ export const CreatePrice: React.FC = () => {
 
         getNf()
     }, [])
-    useEffect(() => console.log(modifiedProducts), [modifiedProducts])
 
     const handleModifiedProducts = (value: InputProductSalePrice) => {
         
@@ -161,21 +177,17 @@ export const CreatePrice: React.FC = () => {
         try {
 
             if (nf && modifiedProducts.products.length > 0) {
-
+                
                 const result: NfPurchase = (await axios.post(BASE_URL_LOCAL + "/price-formation/products", modifiedProducts)).data
                 const { products } = result
 
                 const copyNf = { ...nf }
 
-                nf.products.forEach((product, index) => {
-                    const element = products.find((item) => {
-                        return item.code === product.code
-                    })
-
-                    if (element) {
-                        copyNf.products[index] = element
-                    }
+                products.forEach((item) => {
+                    const index = nf.products.findIndex((prod) => prod.code === item.code)
+                    copyNf.products[index] = item
                 })
+                
 
                 setNf(copyNf)
 
@@ -245,7 +257,7 @@ export const CreatePrice: React.FC = () => {
                     </TableBody>
                 </Table>
             </TableWrapper>
-            <Button variant="contained" endIcon={<UpdateIcon />} onClick={async () => { await createPriceProduct}}>
+            <Button variant="contained" endIcon={<UpdateIcon />} onClick={createPriceProduct}>
                 Atualizar
             </Button>
         </Main>
