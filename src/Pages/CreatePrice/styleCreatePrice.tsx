@@ -1,9 +1,29 @@
 import styled from "styled-components";
+import { Button } from "@mui/material";
+import UpdateIcon from '@mui/icons-material/Update';
 
 type ConfigStyle = {
     styleItem?: boolean
 }
 
+type ConfigTableRow = {
+    isFocusedItem: boolean
+}
+
+export const ButtonUpdate = (titleButton: string, createPriceProduct: Function) => {
+    return (
+        <Button
+            variant="contained"
+            endIcon={<UpdateIcon />}
+            onClick={() => { createPriceProduct() }}
+            style={{
+                width: "10vw"
+            }}
+        >
+            {titleButton}
+        </Button>
+    )
+}
 export const Header = styled.header``
 
 export const LableCodeNf = styled.label``
@@ -25,27 +45,36 @@ export const ValuePurchase = styled.p``
 export const Main = styled.main`
     height: 100%;
     width: 100%;
+    padding-left: 1vw;
+ 
 `
 
-export const TableWrapper = styled.div``
+export const TableWrapper = styled.div`
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    
+`
 
 export const Table = styled.table`
     border-collapse: collapse;
-    width: 100vw;
 `
 
 export const TableHead = styled.thead``
 
 export const RowHead = styled.tr`
     display: flex;
-    width: 87vw;
+    width: 95vw;
     font-weight: 700;
     text-align: center;
 `
+
 export const TableBody = styled.tbody`
     display: flex;
     flex-direction: column;
     overflow-y: auto;
+    overflow-x: hidden;
     &::-webkit-scrollbar {
     width: 1vw; /* Largura da barra de rolagem */
     
@@ -63,16 +92,23 @@ export const TableBody = styled.tbody`
   }
 `
 
-export const TableRow = styled.tr`
+export const TableRow = styled.tr<ConfigTableRow>`
     display: flex;
-    width: 87vw;
+    width: 95vw;
     font-weight: 500;
+    font-size: 2.5vh;
     text-align: center;
     border: 1px solid #f1f1f1;
     height: 6.5vh;
     align-items: center;
     margin-bottom: 0.3vh;
     justify-content: space-around;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    box-shadow: ${props => props.isFocusedItem ? '0 2px 5px rgba(0,0,0,0.2)' : 'none'};
+    &:hover {
+    }
+
 `
 
 export const CodeProduct = styled.td`
@@ -83,7 +119,7 @@ export const CodeProduct = styled.td`
 `
 
 export const Description = styled.td`
-    width: 35vw;
+    width: 45vw;
     height: 4vh;
     text-align: start;
 `

@@ -23,6 +23,8 @@ const RowProducts = (props: { product: ProductsNf, handleModifiedProducts: Funct
         inputFraction: product.fraction.toFixed(2)
     })
 
+    const [focusedRow, setFocusedRow] = useState<number | null>(null);
+
     useEffect(() => {
         setObjectValues({
             codeProduct: product.code,
@@ -68,7 +70,11 @@ const RowProducts = (props: { product: ProductsNf, handleModifiedProducts: Funct
 
 
     return (
-        <TableRow key={product.code}>
+        <TableRow key={product.code}
+            isFocusedItem={focusedRow === product.code}
+            onMouseEnter={() => {setFocusedRow(product.code)}}
+            onMouseLeave={() => {setFocusedRow(null)}}
+        >
             <CodeProduct>{product.code}</CodeProduct>
             <Description>{product.nameProduct}</Description>
             <Quantity>{product.inputQuantity.toFixed(2).replace('.', ',')}</Quantity>
@@ -257,7 +263,14 @@ export const CreatePrice: React.FC = () => {
                     </TableBody>
                 </Table>
             </TableWrapper>
-            <Button variant="contained" endIcon={<UpdateIcon />} onClick={createPriceProduct}>
+            <Button variant="contained" endIcon={<UpdateIcon />} onClick={createPriceProduct}
+                style={{
+                    display: "flex",
+                    justifySelf: "end",
+                    width: "10vw",
+                    
+                }}
+            >
                 Atualizar
             </Button>
         </Main>
