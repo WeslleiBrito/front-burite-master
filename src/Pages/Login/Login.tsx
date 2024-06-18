@@ -15,7 +15,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios, { AxiosError } from 'axios';
 import { BASE_URL_LOCAL } from '../../constants/BASE_URL';
 import { Alert } from '@mui/material';
-import { goSubgroups } from '../../Routes/coordinator';
+import { goListShopping, goSubgroups } from '../../Routes/coordinator';
 import { useNavigate } from 'react-router-dom';
 
 type severity = "success" | "info" | "warning" | "error"
@@ -79,6 +79,7 @@ export const SignInSide = () => {
             localStorage.setItem('idUser', login.data.idUser)
 
             await handleAlert('success', 'Logado com sucesso!')
+            goListShopping(navigate)
         } catch (error) {
             
             if(error instanceof AxiosError){

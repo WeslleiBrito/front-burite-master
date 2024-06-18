@@ -5,11 +5,11 @@ import { BASE_URL_LOCAL } from "../../constants/BASE_URL";
 import { useParams } from "react-router-dom";
 import UpdateIcon from '@mui/icons-material/Update';
 import { Button } from "@mui/material";
-import { CodeProduct, Commission, Cost, Description, ExpenseFixed, ExpenseVariable, InputCommissionPorcentage, InputProfitPorcentage, InputProfitValue, Main, Profit, Quantity, Table, TableHead, TableRow, TableWrapper, InputPrice, Discount, InputDiscountPorcentage, SalePrice, TableBody, RowHead, DiscountValue, CommissionValue } from "./styleCreatePrice";
+import { CodeProduct, Commission, Cost, Description, ExpenseFixed, ExpenseVariable, InputCommissionPorcentage, InputProfitPorcentage, InputProfitValue, Main, Profit, Quantity, Table, TableHead, TableRow, Discount, InputDiscountPorcentage, SalePrice, TableBody, RowHead, DiscountValue, CommissionValue, InputPrice } from "./styleCreatePrice";
 
 type keyObjectValues = "inputCommission" | "inputDiscountPorcentage" | "inputPrice" | "inputProfitPorcentage" | "inputProfitValue" | "inputFraction" | ""
 
-const RowProducts = (props: { product: ProductsNf, handleModifiedProducts: Function}): JSX.Element => {
+const RowProducts = (props: { product: ProductsNf, handleModifiedProducts: Function }): JSX.Element => {
 
     const { product, handleModifiedProducts } = props
 
@@ -41,12 +41,12 @@ const RowProducts = (props: { product: ProductsNf, handleModifiedProducts: Funct
     const handleInput = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target
         setObjectValues((prevForm) => ({ ...prevForm, [name]: value }))
-        
+
     }
 
     useEffect(() => {
-        if(modify.length > 0){
-            const newValues: InputProductSalePrice =  {
+        if (modify.length > 0) {
+            const newValues: InputProductSalePrice = {
                 codeProduct: product.code,
                 cost: product.costValue,
                 commission: Number(objectValues.inputCommission),
@@ -57,7 +57,7 @@ const RowProducts = (props: { product: ProductsNf, handleModifiedProducts: Funct
                 price: modify === 'inputPrice' ? Number(objectValues.inputPrice) : undefined,
                 quantity: product.inputQuantity / product.fraction
             }
-    
+
             handleModifiedProducts(newValues)
         }
     }, [objectValues])
@@ -72,8 +72,8 @@ const RowProducts = (props: { product: ProductsNf, handleModifiedProducts: Funct
     return (
         <TableRow key={product.code}
             isFocusedItem={focusedRow === product.code}
-            onMouseEnter={() => {setFocusedRow(product.code)}}
-            onMouseLeave={() => {setFocusedRow(null)}}
+            onMouseEnter={() => { setFocusedRow(product.code) }}
+            onMouseLeave={() => { setFocusedRow(null) }}
         >
             <CodeProduct>{product.code}</CodeProduct>
             <Description>{product.nameProduct}</Description>
@@ -163,18 +163,18 @@ export const CreatePrice: React.FC = () => {
     }, [])
 
     const handleModifiedProducts = (value: InputProductSalePrice) => {
-        
-            const copyModifiedProducts = Object.assign({}, modifiedProducts)
-            const indexProduct = modifiedProducts.products.findIndex((item) => {return item.codeProduct === value.codeProduct})
-        
-            if(indexProduct !== -1){
-                copyModifiedProducts.products[indexProduct] = value
-                setModifiedProducts({...copyModifiedProducts})
 
-            }else{
-                copyModifiedProducts.products.push(value)
-                setModifiedProducts({...copyModifiedProducts})
-            }
+        const copyModifiedProducts = Object.assign({}, modifiedProducts)
+        const indexProduct = modifiedProducts.products.findIndex((item) => { return item.codeProduct === value.codeProduct })
+
+        if (indexProduct !== -1) {
+            copyModifiedProducts.products[indexProduct] = value
+            setModifiedProducts({ ...copyModifiedProducts })
+
+        } else {
+            copyModifiedProducts.products.push(value)
+            setModifiedProducts({ ...copyModifiedProducts })
+        }
 
     }
 
@@ -183,7 +183,7 @@ export const CreatePrice: React.FC = () => {
         try {
 
             if (nf && modifiedProducts.products.length > 0) {
-                
+
                 const result: NfPurchase = (await axios.post(BASE_URL_LOCAL + "/price-formation/products", modifiedProducts)).data
                 const { products } = result
 
@@ -193,10 +193,10 @@ export const CreatePrice: React.FC = () => {
                     const index = nf.products.findIndex((prod) => prod.code === item.code)
                     copyNf.products[index] = item
                 })
-                
+
 
                 setNf(copyNf)
-
+                setModifiedProducts({products: []})
             }
 
         } catch (error) {
@@ -236,39 +236,36 @@ export const CreatePrice: React.FC = () => {
 
     return (
         <Main>
-            <TableWrapper>
-                <Table>
-                    <TableHead>
-                        <RowHead>
-                            <CodeProduct>Código</CodeProduct>
-                            <Description>Descrição</Description>
-                            <Quantity onClick={() => { orderListQuantity() }}>Quant.</Quantity>
-                            <Cost>Custo</Cost>
-                            <ExpenseFixed>D. Fixa</ExpenseFixed>
-                            <ExpenseVariable>D. Vr</ExpenseVariable>
-                            <Commission>Comissão</Commission>
-                            <Discount>Desconto</Discount>
-                            <Profit>Lucro</Profit>
-                            <SalePrice>Venda</SalePrice>
-                        </RowHead>
-                    </TableHead>
-                    <TableBody>
-                        {
-                            nf ? nf.products.map((product, index) => {
-                                return (
-                                    <RowProducts product={product} key={index + product.code} handleModifiedProducts={handleModifiedProducts} />
-                                )
-                            }) : null
-                        }
-                    </TableBody>
-                </Table>
-            </TableWrapper>
+            <Table>
+                <TableHead>
+                    <RowHead>
+                        <CodeProduct>Código</CodeProduct>
+                        <Description>Descrição</Description>
+                        <Quantity onClick={() => { orderListQuantity() }}>Quant.</Quantity>
+                        <Cost>Custo</Cost>
+                        <ExpenseFixed>D. Fixa</ExpenseFixed>
+                        <ExpenseVariable>D. Vr</ExpenseVariable>
+                        <Commission>Comissão</Commission>
+                        <Discount>Desconto</Discount>
+                        <Profit>Lucro</Profit>
+                        <SalePrice>Venda</SalePrice>
+                    </RowHead>
+                </TableHead>
+                <TableBody>
+                    {
+                        nf ? nf.products.map((product, index) => {
+                            return (
+                                <RowProducts product={product} key={index + product.code} handleModifiedProducts={handleModifiedProducts} />
+                            )
+                        }) : null
+                    }
+                </TableBody>
+            </Table>
             <Button variant="contained" endIcon={<UpdateIcon />} onClick={createPriceProduct}
                 style={{
                     display: "flex",
                     justifySelf: "end",
                     width: "10vw",
-                    
                 }}
             >
                 Atualizar

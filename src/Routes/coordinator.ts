@@ -11,3 +11,7 @@ export const goLoading = (navigate: NavigateFunction): void => {
 export const goCreatePrice = (navigate: NavigateFunction, nf: string): void => {
     navigate(`/create-price/${nf}`)
 }
+
+export const goListShopping = (navigate: NavigateFunction): void => {
+    navigate('/list-shopping')
+}

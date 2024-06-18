@@ -45,12 +45,12 @@ export const ValuePurchase = styled.p``
 export const Main = styled.main`
     height: 100%;
     width: 100%;
-    padding-left: 1vw;
- 
+    background-color: orange;
+
 `
 
 export const TableWrapper = styled.div`
-    width: 100vw;
+    width: 96vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -59,6 +59,11 @@ export const TableWrapper = styled.div`
 
 export const Table = styled.table`
     border-collapse: collapse;
+    background-color: blueviolet;
+    display: flex;
+    flex-direction: column;
+    width: 98vw;
+    padding-left: 1vw;
 `
 
 export const TableHead = styled.thead``
@@ -73,23 +78,24 @@ export const RowHead = styled.tr`
 export const TableBody = styled.tbody`
     display: flex;
     flex-direction: column;
+    height: 55vh;
+    width: 100%;
     overflow-y: auto;
-    overflow-x: hidden;
     &::-webkit-scrollbar {
     width: 1vw; /* Largura da barra de rolagem */
     
-  }
-  &::-webkit-scrollbar-track {
-    background: #f1f1f1; /* Cor de fundo da barra de rolagem */
-    border-radius: 5px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: #888; /* Cor do controle da barra de rolagem */
-    border-radius: 6px; /* Borda do controle da barra de rolagem */
-  }
-  &::-webkit-scrollbar-thumb:hover {
-    background: #555; /* Cor do controle da barra de rolagem ao passar o mouse */
-  }
+    }
+    &::-webkit-scrollbar-track {
+        background: #f1f1f1; /* Cor de fundo da barra de rolagem */
+        border-radius: 5px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: #888; /* Cor do controle da barra de rolagem */
+        border-radius: 6px; /* Borda do controle da barra de rolagem */
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        background: #555; /* Cor do controle da barra de rolagem ao passar o mouse */
+    }
 `
 
 export const TableRow = styled.tr<ConfigTableRow>`
