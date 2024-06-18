@@ -209,26 +209,26 @@ export const CreatePrice: React.FC = () => {
         const newOrder = nf?.products.sort((a, b) => {
 
             if (a.inputQuantity > b.inputQuantity) {
-                if (!order) {
-                    return 1
-                } else {
-                    return -1
-                }
+                return !order ? 1 : -1;
             }
 
             if (a.inputQuantity < b.inputQuantity) {
-                if (!order) {
-                    return -1
-                } else {
-                    return 1
-                }
+                return !order ? -1 : 1;
             }
-            return 0
+
+            return 0;
+
         }) as ProductsNf[]
 
         if (nf) {
-
-            setNf({ ...nf, products: newOrder })
+        
+            setNf({
+                nf: nf.nf,
+                date: nf.date,
+                provider: nf.provider,
+                total: nf.total,
+                products: newOrder
+            })
         }
 
         setOrder(!order)
@@ -255,7 +255,7 @@ export const CreatePrice: React.FC = () => {
                     {
                         nf ? nf.products.map((product, index) => {
                             return (
-                                <RowProducts product={product} key={index + product.code} handleModifiedProducts={handleModifiedProducts} />
+                                <RowProducts product={product} key={product.code} handleModifiedProducts={handleModifiedProducts} />
                             )
                         }) : null
                     }
